@@ -1,0 +1,31 @@
+Sub Macro1()
+'
+' Macro1 Macro
+'
+' Keyboard Shortcut: Ctrl+Shift+A
+'
+Dim Pathf As String
+Dim fileName As String
+Dim latestPosition As Range
+Set latestPosition = Range("A1").End(xlDown)
+
+Pathf = Sheets("key").Range("l1").Value
+fileName = Sheets("key").Range("l2").Value
+
+    Range("Table1[[#Headers],[Timestamp]]").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Selection.Copy
+    Workbooks.Add
+    Sheets("Sheet1").Range("a1").PasteSpecial xlPasteValues
+    Application.CutCopyMode = False
+    ActiveWorkbook.SaveAs fileName:="C:\Users\User\Desktop\RNS\RNS Data.xlsx", _
+        FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
+    ActiveWorkbook.SaveAs fileName:=Pathf & fileName, _
+        FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
+    ActiveWindow.Close
+    latestPosition.Offset(1, 1).Select
+    ActiveWindow.SmallScroll Down:=-78
+End Sub
+
+
